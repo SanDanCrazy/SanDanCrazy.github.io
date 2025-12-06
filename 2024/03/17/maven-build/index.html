@@ -1,0 +1,139 @@
+<!doctype html>
+<html lang="zh"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"><title>Maven构建生命周期 - Hexo</title><link rel="manifest" href="/manifest.json"><meta name="theme-color" content="#f7f7f7"><meta name="application-name" content="Icaurs - Hexo Theme"><meta name="msapplication-TileImage" content="/img/my_logo.svg"><meta name="msapplication-TileColor" content="#f7f7f7"><meta name="apple-mobile-web-app-capable" content="yes"><meta name="apple-mobile-web-app-title" content="Icaurs - Hexo Theme"><meta name="apple-mobile-web-app-status-bar-style" content="default"><meta name="description" content="Maven是什么Maven是一个用来构建和管理任何基于Java项目的工具，主要的目标是允许开发人员在最短的时间内理解开发过程的一个完整的周期。为了实现这个目标，Maven有以下几点考虑："><meta property="og:type" content="blog"><meta property="og:title" content="Maven构建生命周期"><meta property="og:url" content="https://sandancrazy.github.io/2024/03/17/maven-build/"><meta property="og:site_name" content="Hexo"><meta property="og:description" content="Maven是什么Maven是一个用来构建和管理任何基于Java项目的工具，主要的目标是允许开发人员在最短的时间内理解开发过程的一个完整的周期。为了实现这个目标，Maven有以下几点考虑："><meta property="og:locale" content="zh_CN"><meta property="og:image" content="https://sandancrazy.github.io/2024/03/17/maven-build/lifecycle.svg"><meta property="og:image" content="https://sandancrazy.github.io/2024/03/17/maven-build/idea.jpg"><meta property="article:published_time" content="2024-03-17T02:25:29.000Z"><meta property="article:modified_time" content="2024-03-23T02:18:51.303Z"><meta property="article:author" content="金融混子"><meta property="article:tag" content="Maven"><meta property="article:tag" content="Java"><meta property="article:tag" content="后端"><meta property="twitter:card" content="summary"><meta property="twitter:image:src" content="https://sandancrazy.github.io/2024/03/17/maven-build/lifecycle.svg"><script type="application/ld+json">{"@context":"https://schema.org","@type":"BlogPosting","mainEntityOfPage":{"@type":"WebPage","@id":"https://sandancrazy.github.io/2024/03/17/maven-build/"},"headline":"Maven构建生命周期","image":["https://sandancrazy.github.io/2024/03/17/maven-build/idea.jpg"],"datePublished":"2024-03-17T02:25:29.000Z","dateModified":"2024-03-23T02:18:51.303Z","author":{"@type":"Person","name":"金融混子"},"publisher":{"@type":"Organization","name":"Hexo","logo":{"@type":"ImageObject","url":"https://sandancrazy.github.io/img/my_logo.svg"}},"description":"Maven是什么Maven是一个用来构建和管理任何基于Java项目的工具，主要的目标是允许开发人员在最短的时间内理解开发过程的一个完整的周期。为了实现这个目标，Maven有以下几点考虑："}</script><link rel="canonical" href="https://sandancrazy.github.io/2024/03/17/maven-build/"><link rel="icon" href="/img/my_logo.svg"><link rel="stylesheet" href="https://use.fontawesome.com/releases/v6.0.0/css/all.css"><link data-pjax rel="stylesheet" href="https://cdn.jsdelivr.net/npm/highlight.js@11.7.0/styles/atom-one-light.css"><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Ubuntu:wght@400;600&amp;family=Source+Code+Pro"><link data-pjax rel="stylesheet" href="/css/default.css"><style>body>.footer,body>.navbar,body>.section{opacity:0}</style><!--!--><!--!--><!--!--><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/css/lightgallery.min.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/css/justifiedGallery.min.css"><script src="https://www.googletagmanager.com/gtag/js?id=UA-72437521-5" async></script><script>window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+    
+        gtag('config', 'UA-72437521-5');</script><!--!--><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.css"><style>.pace{-webkit-pointer-events:none;pointer-events:none;-webkit-user-select:none;-moz-user-select:none;user-select:none}.pace-inactive{display:none}.pace .pace-progress{background:#3273dc;position:fixed;z-index:2000;top:0;right:100%;width:100%;height:2px}</style><script src="https://cdn.jsdelivr.net/npm/pace-js@1.2.4/pace.min.js"></script><!--!--><!--!--><!-- hexo injector head_end start --><script>
+  (function () {
+      function switchTab() {
+          if (!location.hash) {
+            return;
+          }
+
+          const id = '#' + CSS.escape(location.hash.substring(1));
+          const $tabMenu = document.querySelector(`.tabs a[href="${id}"]`);
+          if (!$tabMenu) {
+            return;
+          }
+
+          const $tabMenuContainer = $tabMenu.parentElement.parentElement;
+          Array.from($tabMenuContainer.children).forEach($menu => $menu.classList.remove('is-active'));
+          Array.from($tabMenuContainer.querySelectorAll('a'))
+              .map($menu => document.getElementById($menu.getAttribute("href").substring(1)))
+              .forEach($content => $content.classList.add('is-hidden'));
+
+          if ($tabMenu) {
+              $tabMenu.parentElement.classList.add('is-active');
+          }
+          const $activeTab = document.querySelector(id);
+          if ($activeTab) {
+              $activeTab.classList.remove('is-hidden');
+          }
+      }
+      switchTab();
+      window.addEventListener('hashchange', switchTab, false);
+  })();
+  </script><!-- hexo injector head_end end --><meta name="generator" content="Hexo 7.1.1"></head><body class="is-2-column"><nav class="navbar navbar-main"><div class="container navbar-container"><div class="navbar-brand justify-content-center"><a class="navbar-item navbar-logo" href="/"><img src="/img/my_logo.svg" alt="Hexo" height="28"></a></div><div class="navbar-menu"><div class="navbar-start"><a class="navbar-item" href="/">Home</a><a class="navbar-item" href="/archives">Archives</a><a class="navbar-item" href="/categories">Categories</a><a class="navbar-item" href="/tags">Tags</a><a class="navbar-item" href="/about">About</a></div><div class="navbar-end"><a class="navbar-item" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a><a class="navbar-item" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a><a class="navbar-item is-hidden-tablet catalogue" title="目录" href="javascript:;"><i class="fas fa-list-ul"></i></a><a class="navbar-item search" title="搜索" href="javascript:;"><i class="fas fa-search"></i></a></div></div></div></nav><section class="section"><div class="container"><div class="columns"><div class="column order-2 column-main is-8-tablet is-8-desktop is-8-widescreen"><div class="card"><article class="card-content article" role="article"><div class="article-meta is-size-7 is-uppercase level is-mobile"><div class="level-left"><span class="level-item"><time dateTime="2024-03-17T02:25:29.000Z" title="3/17/2024, 10:25:29 AM">2024-03-17</time>发表</span><span class="level-item"><a class="link-muted" href="/categories/Java/">Java</a><span> / </span><a class="link-muted" href="/categories/Java/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/">构建工具</a></span><span class="level-item">10 分钟读完 (大约1459个字)</span></div></div><h1 class="title is-3 is-size-4-mobile">Maven构建生命周期</h1><div class="content"><h2 id="Maven是什么"><a href="#Maven是什么" class="headerlink" title="Maven是什么"></a>Maven是什么</h2><p>Maven是一个用来构建和管理任何基于Java项目的工具，主要的目标是允许开发人员在最短的时间内理解开发过程的一个完整的周期。为了实现这个目标，Maven有以下几点考虑：</p>
+<span id="more"></span>
+<ul>
+<li>让构建流程更简单</li>
+<li>提供一个统一的构建系统</li>
+<li>提供项目质量信息</li>
+<li>鼓励更好的开发实践</li>
+</ul>
+<h3 id="让构建流程更简单"><a href="#让构建流程更简单" class="headerlink" title="让构建流程更简单"></a>让构建流程更简单</h3><p>使用Maven不需要理解它的底层机制，它为开发者隐藏了很多细节</p>
+<h3 id="提供一个统一的构建系统"><a href="#提供一个统一的构建系统" class="headerlink" title="提供一个统一的构建系统"></a>提供一个统一的构建系统</h3><p>Maven使用POM和一系列插件来构建一个项目，一旦熟悉一个Maven项目，你就会知道所有Maven项目是如何构建的。</p>
+<h3 id="提供项目质量信息"><a href="#提供项目质量信息" class="headerlink" title="提供项目质量信息"></a>提供项目质量信息</h3><p>Maven会从POM和项目源代码中获取有用的项目信息，三方代码扫描产品也提供了Maven插件用来生成标准报告用于Maven解析。</p>
+<h3 id="鼓励更好的开发实践"><a href="#鼓励更好的开发实践" class="headerlink" title="鼓励更好的开发实践"></a>鼓励更好的开发实践</h3><p>Maven旨在为开发最佳实践提供正确的原则，并且可以简单地指导项目进行最佳实践。<br>例如目前单元测试的最佳实践：</p>
+<ul>
+<li>将测试代码放到一个单独，并列的源码树</li>
+<li>使用测试用例命名规范去定位和执行测试</li>
+<li>让测试用例准备自己的环境而不是自定义测试构建的准备工作</li>
+</ul>
+<h2 id="Maven构建生命周期详解"><a href="#Maven构建生命周期详解" class="headerlink" title="Maven构建生命周期详解"></a>Maven构建生命周期详解</h2><p><img src="/2024/03/17/maven-build/lifecycle.svg" alt="Component of lifecycle"></p>
+<p>mvn命令行形式一般为：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">mvn [phase] [plugin:goal]</span><br></pre></td></tr></table></figure>
+<p>其中phase一般从不同的lifecycle中取值，因此个数不会多于三个，plugin:goal可以为0个或者多个。phase和plugin:goal按照命令行从左往右依次执行。下面详细讲解一下各个名词的概念。</p>
+<h3 id="Lifecycle"><a href="#Lifecycle" class="headerlink" title="Lifecycle"></a>Lifecycle</h3><p>maven只有三个内置的lifecycle：default（项目部署）, clean（项目清理，需要注意的是这里的clean和phase里的clean不是一个概念上的东西，lifecycle无法作为mvn命令的参数，因此mvn clean指的是执行clean lifecycle里的clean phase） and site（项目网站的创建，不常用）。每个lifecycle由多个phase组成，它们串行执行以完成lifecycle里的任务。执行其中一个phase时都会按照顺序从它所属的lifecycle里的第一个phase开始执行到该phase。</p>
+<h3 id="Phase"><a href="#Phase" class="headerlink" title="Phase"></a>Phase</h3><p>构建流程里的组织单元，它们在lifecycle中的执行顺序是固定的，因此执行计划是可预知的。一个phase会绑定0个或者多个goal，当该phase执行时，所绑定的goal会全部执行（多个goal会按照pom文件中声明的顺序依次执行），并且该phase所在的lifecycle中之前的phase也会全部执行。</p>
+<h3 id="Plugins"><a href="#Plugins" class="headerlink" title="Plugins"></a>Plugins</h3><p>负责提供goal用来绑定到phase上执行或者单独执行plugin:goal。</p>
+<h3 id="Goal"><a href="#Goal" class="headerlink" title="Goal"></a>Goal</h3><p>构建流程里的执行单元，它可以单独执行，也可以绑定到phase上执行。</p>
+<blockquote>
+<p><a target="_blank" rel="noopener" href="https://stackoverflow.com/questions/16205778/what-are-maven-goals-and-phases-and-what-is-their-difference">Goal和Phase的区别</a></p>
+</blockquote>
+<p>注：在常用编辑器IDEA中，点开右边的Maven图标可以看到项目里的Lifecycle为下图所示内容，其实这里包含的全部都是phase。</p>
+<p><img src="/2024/03/17/maven-build/idea.jpg" alt="IDEA Maven插件"></p>
+<h2 id="常见场景"><a href="#常见场景" class="headerlink" title="常见场景"></a>常见场景</h2><h3 id="1-mvn-clean-package"><a href="#1-mvn-clean-package" class="headerlink" title="1.mvn clean package"></a>1.mvn clean package</h3><p>该命令的作用是清理target目录下的文件，在机器上构建打包，生成可执行的jar包或者war包。该命令的构建结果文件通常位于和src同级的target目录下。<code>clean</code>的作用是清理之前的构建文件，以免影响本次构建结果。<code>package</code>的作用是执行校验，编译，测试，打包。</p>
+<p>该命令常用于在流水线里执行构建计划，并将打包出来的文件上传到指定的制品库中。</p>
+<h3 id="2-mvn-clean-install"><a href="#2-mvn-clean-install" class="headerlink" title="2.mvn clean install"></a>2.mvn clean install</h3><p>该命令比上一条<code>mvn clean package</code>命令多执行了两个phase:<code>verify</code>和<code>install</code>。<code>verify</code>用于额外的验证检查，通常是集成测试或插件指定的测试，<code>install</code>用于将打包结果安装到本地的maven仓库中。</p>
+<p>该命令常用于构建多个项目且项目间存在依赖项，例如A项目依赖B项目的alpha版本，但是B项目目前是beta版本，需要B项目进行一次版本升级到alpha后A项目才能获取到正确的依赖。因此对B版本运行<code>mvn clean install</code>后将打包结果安装到本地，A项目就能正确解析到所需B项目的版本。</p>
+<h3 id="3-mvn-clean-deploy"><a href="#3-mvn-clean-deploy" class="headerlink" title="3.mvn clean deploy"></a>3.mvn clean deploy</h3><p>该命令比<code>mvn clean install</code>命令多执行了<code>deploy</code> phase，该命令的作用是将最终制品文件上传到maven仓库以发布上线或者共享文件。该命令通常需要settings.xml文件（maven的配置文件）的配合，例如在settings.xml中配置了私有仓库，并且针对snapshot和release类型的包分别配置了仓库链接，那么在<code>deploy</code>时，就会根据包版本结尾是否包含SNAPSHOT来判断上传到哪个仓库。</p>
+<p><code>deploy</code>具体依赖哪些配置项可以阅读<a target="_blank" rel="noopener" href="https://maven.apache.org/settings.html">settings.xml文件格式解析</a></p>
+<h2 id="结尾"><a href="#结尾" class="headerlink" title="结尾"></a>结尾</h2><p>mvn命令除了主要的phase和goal，还包含很多用于控制系统环境的参数，例如 <code>-P</code> 用来激活某个<code>profile</code>，<code>-D</code> 用来指定java全局属性，<code>-ff</code> 遇到构建失败直接退出。</p>
+</div><div class="article-licensing box"><div class="licensing-title"><p>Maven构建生命周期</p><p><a href="https://sandancrazy.github.io/2024/03/17/maven-build/">https://sandancrazy.github.io/2024/03/17/maven-build/</a></p></div><div class="licensing-meta level is-mobile"><div class="level-left"><div class="level-item is-narrow"><div><h6>作者</h6><p>金融混子</p></div></div><div class="level-item is-narrow"><div><h6>发布于</h6><p>2024-03-17</p></div></div><div class="level-item is-narrow"><div><h6>更新于</h6><p>2024-03-23</p></div></div><div class="level-item is-narrow"><div><h6>许可协议</h6><p><a class="icons" rel="noopener" target="_blank" title="Creative Commons" href="https://creativecommons.org/"><i class="icon fab fa-creative-commons"></i></a><a class="" rel="noopener" target="_blank" title="CC BY-NC-SA 4.0" href="https://creativecommons.org/licenses/by-nc-sa/4.0/">CC BY-NC-SA 4.0</a></p></div></div></div></div></div><div class="article-tags is-size-7 mb-4"><span class="mr-2">#</span><a class="link-muted mr-2" rel="tag" href="/tags/Maven/">Maven</a><a class="link-muted mr-2" rel="tag" href="/tags/Java/">Java</a><a class="link-muted mr-2" rel="tag" href="/tags/%E5%90%8E%E7%AB%AF/">后端</a></div><div class="sharethis-inline-share-buttons"></div><script src="//platform-api.sharethis.com/js/sharethis.js#property=5ab6f60ace89f00013641890&amp;product=inline-share-buttons" defer></script></article></div><!--!--><nav class="post-navigation mt-4 level is-mobile"><div class="level-start"><a class="article-nav-prev level level-item link-muted" href="/2024/03/23/maven-settings/"><i class="level-item fas fa-chevron-left"></i><span class="level-item">maven-settings</span></a></div></nav><div class="card"><div class="card-content"><h3 class="title is-5">评论</h3><div id="comment-container"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.css"><script src="https://cdn.jsdelivr.net/npm/gitalk@1.7.2/dist/gitalk.min.js"></script><script>var gitalk = new Gitalk({
+            id: "5740067087f5830946b5bf5af19689f7",
+            repo: "https://github.com/SanDanCrazy/comment",
+            owner: "SanDanCrazy",
+            clientID: "55063611a660957e8e84",
+            clientSecret: "2eae129b1dd2b267154899269cd8772b56606995",
+            admin: ["SanDanCrazy"],
+            createIssueManually: false,
+            distractionFreeMode: false,
+            perPage: 20,
+            pagerDirection: "last",
+            
+            
+            enableHotKey: true,
+            
+        })
+        gitalk.render('comment-container')</script></div></div></div><!--!--><div class="column column-right is-4-tablet is-4-desktop is-4-widescreen  order-3 is-sticky"><div class="card widget" id="toc" data-type="toc"><div class="card-content"><div class="menu"><h3 class="menu-label">目录</h3><ul class="menu-list"><li><a class="level is-mobile" href="#Maven是什么"><span class="level-left"><span class="level-item">1</span><span class="level-item">Maven是什么</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#让构建流程更简单"><span class="level-left"><span class="level-item">1.1</span><span class="level-item">让构建流程更简单</span></span></a></li><li><a class="level is-mobile" href="#提供一个统一的构建系统"><span class="level-left"><span class="level-item">1.2</span><span class="level-item">提供一个统一的构建系统</span></span></a></li><li><a class="level is-mobile" href="#提供项目质量信息"><span class="level-left"><span class="level-item">1.3</span><span class="level-item">提供项目质量信息</span></span></a></li><li><a class="level is-mobile" href="#鼓励更好的开发实践"><span class="level-left"><span class="level-item">1.4</span><span class="level-item">鼓励更好的开发实践</span></span></a></li></ul></li><li><a class="level is-mobile" href="#Maven构建生命周期详解"><span class="level-left"><span class="level-item">2</span><span class="level-item">Maven构建生命周期详解</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#Lifecycle"><span class="level-left"><span class="level-item">2.1</span><span class="level-item">Lifecycle</span></span></a></li><li><a class="level is-mobile" href="#Phase"><span class="level-left"><span class="level-item">2.2</span><span class="level-item">Phase</span></span></a></li><li><a class="level is-mobile" href="#Plugins"><span class="level-left"><span class="level-item">2.3</span><span class="level-item">Plugins</span></span></a></li><li><a class="level is-mobile" href="#Goal"><span class="level-left"><span class="level-item">2.4</span><span class="level-item">Goal</span></span></a></li></ul></li><li><a class="level is-mobile" href="#常见场景"><span class="level-left"><span class="level-item">3</span><span class="level-item">常见场景</span></span></a><ul class="menu-list"><li><a class="level is-mobile" href="#1-mvn-clean-package"><span class="level-left"><span class="level-item">3.1</span><span class="level-item">1.mvn clean package</span></span></a></li><li><a class="level is-mobile" href="#2-mvn-clean-install"><span class="level-left"><span class="level-item">3.2</span><span class="level-item">2.mvn clean install</span></span></a></li><li><a class="level is-mobile" href="#3-mvn-clean-deploy"><span class="level-left"><span class="level-item">3.3</span><span class="level-item">3.mvn clean deploy</span></span></a></li></ul></li><li><a class="level is-mobile" href="#结尾"><span class="level-left"><span class="level-item">4</span><span class="level-item">结尾</span></span></a></li></ul></div></div><style>#toc .menu-list > li > a.is-active + .menu-list { display: block; }#toc .menu-list > li > a + .menu-list { display: none; }</style><script src="/js/toc.js" defer></script></div><div class="card widget" data-type="categories"><div class="card-content"><div class="menu"><h3 class="menu-label">分类</h3><ul class="menu-list"><li><a class="level is-mobile" href="/categories/Java/"><span class="level-start"><span class="level-item">Java</span></span><span class="level-end"><span class="level-item tag">1</span></span></a><ul><li><a class="level is-mobile" href="/categories/Java/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/"><span class="level-start"><span class="level-item">构建工具</span></span><span class="level-end"><span class="level-item tag">1</span></span></a></li></ul></li></ul></div></div></div><div class="card widget" data-type="tags"><div class="card-content"><div class="menu"><h3 class="menu-label">标签</h3><div class="field is-grouped is-grouped-multiline"><div class="control"><a class="tags has-addons" href="/tags/Java/"><span class="tag">Java</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/Maven/"><span class="tag">Maven</span><span class="tag">1</span></a></div><div class="control"><a class="tags has-addons" href="/tags/%E5%90%8E%E7%AB%AF/"><span class="tag">后端</span><span class="tag">1</span></a></div></div></div></div></div><div class="card widget" data-type="recent-posts"><div class="card-content"><h3 class="menu-label">最新文章</h3><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-23T02:41:09.000Z">2024-03-23</time></p><p class="title"><a href="/2024/03/23/maven-settings/">maven-settings</a></p></div></article><article class="media"><div class="media-content"><p class="date"><time dateTime="2024-03-17T02:25:29.000Z">2024-03-17</time></p><p class="title"><a href="/2024/03/17/maven-build/">Maven构建生命周期</a></p><p class="categories"><a href="/categories/Java/">Java</a> / <a href="/categories/Java/%E6%9E%84%E5%BB%BA%E5%B7%A5%E5%85%B7/">构建工具</a></p></div></article></div></div></div></div></div></section><footer class="footer"><div class="container"><div class="level"><div class="level-start"><a class="footer-logo is-block mb-2" href="/"><img src="/img/my_logo.svg" alt="Hexo" height="28"></a><p class="is-size-7"><span>&copy; 2025 金融混子</span>  Powered by <a href="https://hexo.io/" target="_blank" rel="noopener">Hexo</a> &amp; <a href="https://github.com/ppoffice/hexo-theme-icarus" target="_blank" rel="noopener">Icarus</a><br><a href="https://beian.miit.gov.cn/" target="_blank">粤ICP备2024271702号</a></p></div><div class="level-end"><div class="field has-addons"><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Creative Commons" href="https://creativecommons.org/"><i class="fab fa-creative-commons"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Discuss on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus/discussions"><i class="fas fa-comments"></i></a></p><p class="control"><a class="button is-transparent is-large" target="_blank" rel="noopener" title="Download on GitHub" href="https://github.com/ppoffice/hexo-theme-icarus"><i class="fab fa-github"></i></a></p></div></div></div></div></footer><script src="https://cdn.jsdelivr.net/npm/jquery@3.3.1/dist/jquery.min.js"></script><script src="https://cdn.jsdelivr.net/npm/moment@2.22.2/min/moment-with-locales.min.js"></script><script src="https://cdn.jsdelivr.net/npm/clipboard@2.0.4/dist/clipboard.min.js" defer></script><script>moment.locale("zh-cn");</script><script>var IcarusThemeSettings = {
+            article: {
+                highlight: {
+                    clipboard: true,
+                    fold: 'unfolded'
+                }
+            }
+        };</script><script data-pjax src="/js/column.js"></script><script src="/js/animation.js"></script><a id="back-to-top" title="回到顶端" href="javascript:;"><i class="fas fa-chevron-up"></i></a><script data-pjax src="/js/back_to_top.js" defer></script><!--!--><!--!--><!--!--><script src="https://cdn.jsdelivr.net/npm/cookieconsent@3.1.1/build/cookieconsent.min.js" defer></script><script>window.addEventListener("load", () => {
+      window.cookieconsent.initialise({
+        type: "info",
+        theme: "edgeless",
+        static: false,
+        position: "bottom-left",
+        content: {
+          message: "此网站使用Cookie来改善您的体验。",
+          dismiss: "知道了！",
+          allow: "允许使用Cookie",
+          deny: "拒绝",
+          link: "了解更多",
+          policy: "Cookie政策",
+          href: "https://www.cookiesandyou.com/",
+        },
+        palette: {
+          popup: {
+            background: "#edeff5",
+            text: "#838391"
+          },
+          button: {
+            background: "#4b81e8"
+          },
+        },
+      });
+    });</script><script src="https://cdn.jsdelivr.net/npm/lightgallery@1.10.0/dist/js/lightgallery.min.js" defer></script><script src="https://cdn.jsdelivr.net/npm/justifiedGallery@3.8.1/dist/js/jquery.justifiedGallery.min.js" defer></script><script>window.addEventListener("load", () => {
+            if (typeof $.fn.lightGallery === 'function') {
+                $('.article').lightGallery({ selector: '.gallery-item' });
+            }
+            if (typeof $.fn.justifiedGallery === 'function') {
+                if ($('.justified-gallery > p > .gallery-item').length) {
+                    $('.justified-gallery > p > .gallery-item').unwrap();
+                }
+                $('.justified-gallery').justifiedGallery();
+            }
+        });</script><!--!--><!--!--><div id="outdated"><h6>Your browser is out-of-date!</h6><p>Update your browser to view this website correctly.&amp;npsb;<a id="btnUpdateBrowser" target="_blank" rel="noopener" href="http://outdatedbrowser.com/">Update my browser now </a></p><p class="last"><a href="#" id="btnCloseUpdateBrowser" title="Close">×</a></p></div><script src="https://cdn.jsdelivr.net/npm/outdatedbrowser@1.1.5/outdatedbrowser/outdatedbrowser.min.js" defer></script><script>window.addEventListener("load", function () {
+            outdatedBrowser({
+                bgColor: '#f25648',
+                color: '#ffffff',
+                lowerThan: 'object-fit' // display on IE11 or below
+            });
+        });</script><!--!--><!--!--><!--!--><script data-pjax src="/js/main.js" defer></script><div class="searchbox"><div class="searchbox-container"><div class="searchbox-header"><div class="searchbox-input-container"><input class="searchbox-input" type="text" placeholder="想要查找什么..."></div><a class="searchbox-close" href="javascript:;">×</a></div><div class="searchbox-body"></div></div></div><script src="/js/insight.js" defer></script><script>document.addEventListener('DOMContentLoaded', function () {
+            loadInsight({"contentUrl":"/content.json"}, {"hint":"想要查找什么...","untitled":"(无标题)","posts":"文章","pages":"页面","categories":"分类","tags":"标签"});
+        });</script></body></html>
